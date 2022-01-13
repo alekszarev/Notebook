@@ -1,0 +1,12 @@
+﻿#Welcome {
+    position: absolute;
+    left: -50px;
+    animation: move 57s infinite linear forwards;
+}
+
+@keyframes move {
+    50% {
+        left: calc(100% - 70px);
+    }
+}
+
