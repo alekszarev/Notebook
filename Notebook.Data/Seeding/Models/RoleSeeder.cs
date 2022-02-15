@@ -8,11 +8,11 @@ namespace Notebook.Data.Seeding.Models
     {
         public async Task SeedAsync(NotebookContext dbContext, IServiceProvider serviceProvider)
         {
-                var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
-                string ownerRole = "Owner";
-                string clientRole = "Client";
-                await SeedRoleAsync(roleManager, ownerRole);
-                await SeedRoleAsync(roleManager, clientRole);
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
+            string ownerRole = "Owner";
+            string clientRole = "Client";
+            await SeedRoleAsync(roleManager, ownerRole);
+            await SeedRoleAsync(roleManager, clientRole);
         }
 
         private static async Task SeedRoleAsync(RoleManager<Role> roleManager, string roleName)

@@ -7,21 +7,37 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+        <center>
+        <a  style="color:white; background-color:rgb(0,0,0,0.5); border-radius:55px" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Профил</a>
+    </center>
     </li>
+    <br />
     <li class="nav-item">
+        <center>
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            <button  type="submit"  style="align-content:center; color:red; background-color:rgb(0,0,0,0.7); border-radius:55px" class="nav-link btn btn-link">Изход</button>
         </form>
+        </center>
     </li>
-}
+                }
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <a class="nav-link" style="color:white" asp-area="Identity" asp-page="/Account/Login">Вход</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
+     <center>
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link"  style="color:white" asp-area="" asp-controller="Home" asp-action="Gallery" style="text-align:start; color:white">Галерия</a>
+                        </li>
+                    </ul>
+                    </center>
+                                             <center>
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link"  style="color:white" asp-area="" asp-controller="Home" asp-action="Gallery" style="text-align:start; color:white">За Мен</a>
+                        </li>
+                    </ul>
+                    </center>
 }
 </ul>

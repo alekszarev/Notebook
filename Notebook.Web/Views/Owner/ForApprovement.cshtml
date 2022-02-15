@@ -1,0 +1,99 @@
+﻿@using Notebook.Data.Models.Calendar
+@model List<Appointment>
+<head>
+    <link href="/css/minimal-tableDark.css" rel="stylesheet" type="text/css">
+</head>
+<h1>Заявки:</h1>
+<form>
+    <select id="dynamic_select">
+        <option value="https://localhost:7172/Owner/Appointments"> всички </option>
+        <option selected value="https://localhost:7172/Owner/ForApprovement"> чакащи </option>
+    </select>
+</form>
+<div style="margin-left:95%">
+    <a style="color:white; font-family:'Lucida Sans'; border-radius:200px; background-color:rgb(0,128,2,0.3)">(@Model.Count())</a>
+</div>
+<center>
+    <table>
+        <tr>
+            <th style="max-width:8px;">Час</th>
+            <th>Дата</th>
+            <th style="max-width:10px;">Процедура</th>
+            <th>Клиент</th>
+            <th style="max-width:8px;">статус</th>
+        </tr>
+        @foreach (var item in @Model)
+        {
+            if (item == null)
+            {
+                continue;
+            }
+            var day = $"{item.Hour.Day.Date} {item.Hour.Day.Month.MonthName} ";
+            var hour = $"{item.Hour.Clock}";
+            <tr style="border-top-width:1px">
+
+                <td type=day class=popup-trigger onclick=window.location.replace(`https://localhost:7172/owner/approve?day =${@item.Hour.Day.DayId}&hour =${@item.Hour.Clock}`) style=" background-color:rgb(211,211,211,0.5); color:white;font-size:12px;">@item.Hour.Clock:00</td>
+                <td style="background-color:rgb(0,0,0,0.5); font-size:15px; font-weight:600; color:white">@day</td>
+                @{
+                    var colorProcedure = "rgb(233,150,122,0.6)";
+                    if (@item.Hour.Appointment.Procedure.ProcedureId < 2)
+                    {
+                        colorProcedure = "rgb(233,150,122,0.6)";
+                    }
+                    <td style="background-color:rgb(0,0,0,0.5)"><a style="color:white;border-radius:2px; background-color:@colorProcedure">&nbsp;@item.Hour.Appointment.Procedure.ProcedureName&nbsp;</a></td>
+                    if (item.User != null)
+                    {
+                        if (@item.User.Name != null)
+                        {
+                            <td style="background-color:rgb(0,0,0,0.5); color:white; font-size:15px">@item.User.Name</td>
+                        }
+                        else
+                        {
+                            <td style="background-color:rgb(0,0,0,0.5); color:white; font-size:15px">@item.User.UserName</td>
+                        }
+
+                    }
+                    else if (item.UserBuffer != null)
+                    {
+                        <td style="background-color:rgb(0,0,0,0.5); color:white; font-size:15px">@item.UserBuffer.Name</td>
+                    }
+                    else
+                    {
+                        <td style="background-color:rgb(0,0,0,0.5); color:white;">няма данни</td>
+                    }
+                }
+
+                @{
+                    if (@item.IsAproved == false)
+                    {
+
+                        <td onclick=window.location.replace(`https://localhost:7172/owner/setstatus?hourId=${@item.HourId}`) style="background-color:rgb(0,0,0,0.5)"><a style="color:black;background-color:rgb(255, 255,0,0.5); border-radius:30px">&nbsp;чака&nbsp;</a></td>
+                    }
+                    else
+                    {
+                        <td onclick=window.location.replace(`https://localhost:7172/owner/setstatus?hourId=${@item.HourId}`) style="background-color:rgb(0,0,0,0.5)"><a style="color:white;background-color:rgb(0, 255,0,0.5); border-radius:30px">&nbsp;одобрен&nbsp;</a></td>
+                    }
+                }
+
+            </tr>
+        }
+    </table>
+</center>
+
+<br />
+<br />
+<br />
+@section Scripts{
+<script type="text/javascript">
+    $(function(){
+      // bind change event to select
+      $('#dynamic_select').on('change', function () {
+          var url = $(this).val(); // get selected value
+          if (url) { // require a URL
+              window.location = url; // redirect
+          }
+          return false;
+      });
+    });
+</script>
+}

@@ -1,0 +1,107 @@
+﻿@using Notebook.Data.Models.Calendar
+@model Day
+
+<head>
+    <link href="/css/minimal-tableDark.css" rel="stylesheet" type="text/css">
+</head>
+<div style="margin-left:95%">
+    <a style="color:white; font-family:'Lucida Sans'; border-radius:200px; background-color:rgb(0,128,2,0.3)">(@Model.Appointments)</a>
+</div>
+<div>
+    <center>
+        @{
+            var dayId = Model.DayId;
+            var url = $"https://localhost:7172/owner/day?id=";
+
+
+            if (dayId == 1)
+            {
+                <h1 style="text-align:center">@Model.Date @Model.Month.MonthName<a href='@url@(dayId+1)' style="text-decoration: none"> →</a></h1>
+            }
+            else
+            {
+                <h1 style="text-align:center"> <a href='@url@(dayId-1)' style="text-decoration: none">← </a>@Model.Date @Model.Month.MonthName<a href='@url@(dayId+1)' style="text-decoration: none"> →</a></h1>
+            }
+
+            if (@Model.WorkingDay == false)
+            {
+                <h1 style="font-size:10px; color: red">Неработен ден</h1>
+            }
+            else
+            {
+                var procedureId = 0;
+                <table>
+                    <tr>
+                        <th>Час</th>
+                        <th>Клиент</th>
+                        <th>Процедура</th>
+                        <th>статус</th>
+                    </tr>
+                    @foreach (var item in @Model.Hours)
+                    {
+                        var hour = $"{item.Clock}";
+                        <tr>
+                            @if (item.Appointment == null)
+                            {
+                                if (procedureId > 1)
+                                {
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    procedureId = 0;
+
+                                }
+                                else
+                                {
+                                    <td type=day class=popup-trigger onclick=window.location.replace(`https://localhost:7172/owner/approve?day=${@item.DayId}&hour =${@item.Clock}`); style="border-radius:200px; color:white;background-color:rgb(255,105,180,0.5)">@item.Clock:00</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><h6 onclick=window.location.replace(`https://localhost:7172/owner/MakeAppointment?hourId=${@item.HourId}`); style="border-radius:200px; color:white;background-color:rgb(255,105,180,0.3)">Запиши час</h6></td>
+
+                                }
+                            }
+                            else if (item.Appointment.IsAproved == false)
+                            {
+                                procedureId = (int)item.Appointment.ProcedureId;
+                                <td type=day class=popup-trigger onclick=window.location.replace(`https://localhost:7172/owner/approve?day=${@item.DayId}&hour=${@item.Clock}`); style="color:white;background-color:rgb(1,1,1,0.5)">@item.Clock:00</td>
+
+                                if (@item.Appointment.User != null)
+                                {
+                                    <td style="color:white; background-color:rgb(1,1,1,0.5);font-size:18px">@item.Appointment.User.UserName</td>
+                                }
+                                else if (@item.Appointment.UserBuffer != null)
+                                {
+                                    <td style="color:white; background-color:rgb(255,105,180,0.5); font-size:18px">@item.Appointment.UserBuffer.Name</td>
+                                }
+
+                                <td style="background-color:rgb(255,255,0,0.4); font-size:18px; color:white">@item.Appointment.Procedure.ProcedureName</td>
+                                                        <td onclick=window.location.replace(`https://localhost:7172/owner/setstatus?hourId=${@item.HourId}`) style="background-color:rgb(0,0,0,0.5)"><a style="color:black;background-color:rgb(255, 255,0,0.5);font-size:15px; border-radius:30px">&nbsp;чака&nbsp;</a></td>
+                            }
+                            else
+                            {
+                                procedureId = (int)item.Appointment.ProcedureId;
+                                <td type=day class=popup-trigger onclick=window.location.replace(`https://localhost:7172/owner/approve?day=${@item.DayId}&hour=${@item.Clock}`) style="color:white;background-color:rgb(1,1,1,0.5)">@item.Clock:00</td>
+                                if (@item.Appointment.User != null)
+                                {
+                                    <td style="color:white; font-size:18px">@item.Appointment.User.UserName</td>
+                                }
+                                else if (@item.Appointment.UserBuffer != null)
+                                {
+                                    <td style="color:white; background-color:rgb(255,105,180,0.5); font-size:18px">@item.Appointment.UserBuffer.Name</td>
+                                }
+
+
+                                <td style="background-color:rgb(255,255,0,0.4);font-size:18px; color:white">@item.Appointment.Procedure.ProcedureName</td>
+                                <td onclick=window.location.replace(`https://localhost:7172/owner/setstatus?hourId=${@item.HourId}`) style="background-color:rgb(0,0,0,0.5)"><a style="color:white;background-color:rgb(0, 255,0,0.5);font-size:15px; border-radius:30px">&nbsp;одобрен&nbsp;</a></td>
+                            }
+                        </tr>
+                    }
+                </table>
+            }
+        }
+    </center>
+</div>
+<br />
+<br />
+<br />

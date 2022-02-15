@@ -1,0 +1,13 @@
+﻿@model int
+
+<center style="background-color:rgb(0,0,0,0.6)">
+    <h6 style="color:white">Потвърдете отказ от часа си</h6>
+</center>
+<br />
+<center>
+    <button onclick=window.location.replace("/client/cancel?id=@Model&delete=true"); style="background-color:rgb(0,0,0,0.6); margin-right:25%;border-radius:33px; color:green ;font-size:33px">
+    ✔
+</button>
+<button onclick=window.location.replace("/home"); style="background-color:rgb(0,0,0,0.6); border-radius:33px; color:red;  font-size:33px">&nbsp;✘&nbsp;</button>
+</center>
+

@@ -1,0 +1,33 @@
+﻿@model UserBufferWebModel
+
+<center>
+<h1>Запиши час:</h1>
+<h3><a style="color:white; background-color:rgb(0,0,0,0.4)">@Model.Date</a></h3>
+</center>
+<form asp-action="Send">    
+        <input asp-for="HourId" value="@Model.HourId" hidden />
+
+      <div class="form-floating">
+                <input asp-for="Email" class="form-control" aria-required="true" />
+                <label asp-for="Email"></label>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Name" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Name"></label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+               <div class="form-floating">
+                <input asp-for="Phone" class="form-control" autocomplete="name" aria-required="true" />
+                <label asp-for="Phone"></label>
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div>
+                        <label asp-for="ProcedureId" style="color:white; border-radius:22px;">
+                Процедура:
+            </label>
+            <select asp-for="ProcedureId" asp-items="@Model.Procedure" class="form-control" style="text-align:center; color:black; background-color:rgb(255,255,200,0.5)"></select>
+            </div>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Запиши</button>
+</form>

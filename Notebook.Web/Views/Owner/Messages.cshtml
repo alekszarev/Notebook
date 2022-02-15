@@ -1,0 +1,29 @@
+﻿@using Notebook.Data.Models
+@model List<Message>
+
+<head>
+    <link href="/css/minimal-tableDark.css" rel="stylesheet" type="text/css">
+</head>
+<center>
+ <div style="right:10%"><span style="border-radius:200px; background-color:rgb(255,105,180,0.3); font-size:20px; color:white" onclick=window.location.replace(`https://localhost:7172/owner/writemessage`)>&nbsp;Ново съобщение&nbsp;</span></div>
+</center>
+<br />
+<h1>Съобщения:</h1>
+
+@{
+    if(@Model.Count>0)
+    {
+    foreach(var item in @Model)
+    {
+    <a>---------------</a>    
+    <a>@item.Title</a>
+    <br />
+    <a>@item.Content</a>
+            <a>---------------</a>
+        }
+    }
+    else
+    {
+        <a>няма съобщения</a>
+    }
+}

@@ -4,10 +4,11 @@ using Notebook.Data.Models;
 
 namespace Notebook.Data.ModelsConfig
 {
-    public class UserConfigUserConfig : IEntityTypeConfiguration<User>
+    public class UserConfig : IEntityTypeConfiguration<User>
     {
         public void Configure(EntityTypeBuilder<User> appUser)
         {
+            appUser.HasMany(x=>x.Conversations).WithMany(x=>x.Users);
             appUser
                 .HasMany(e => e.Claims)
                 .WithOne()

@@ -1,0 +1,46 @@
+﻿@using Notebook.Web.Models
+@model List<AppointmentWebModel>
+<head>
+    <link href="/css/minimal-tableDark.css" rel="stylesheet" type="text/css">
+</head>
+<div style="margin-left:95%">
+<a style="color:white; font-family:'Lucida Sans'; border-radius:200px; background-color:rgb(0,128,2,0.3)">(@Model.Count())</a>
+</div>
+<center>
+
+    <table>
+        <tr>
+            <th>Час</th>
+            <th>Ден
+            <th>Процедура</th>
+            <th style="font-size:6px">отговор</th>
+            <th style="width:50px">Отказ</th>
+        </tr>
+        @if (@Model.Count == 0)
+        {
+            <h1 style="color:red; font-size:17px">Нямате записани часове</h1>
+        }
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr style="border-block:solid; border-block-start-style:ridge">
+                <td><a style=" color:white; font-size:13px; background-color:rgb(345,221,121,0.3)">@Model[i].Clock:00</a></td>
+                <td style="border-radius:110px; background-color:rgb(431,11,222,0.3);"><a style="color:white; font-size:17px">@Model[i].Day</a><br />
+                    <a style="color:white; font-size:8px">@Model[i].WeekDay</a></td>
+                <td><a style="color:white; font-size:12px">Гел лак</a></td>
+                  
+                <td style="background-color:transparent; color:white">
+                      <span>&nbsp;</span>
+                      чака<br/>одобрение
+@*                    <h1 href="+" style="height: 25px; border-block:solid; color:green ;font-size:18px">✔</h1>
+                    <span>&nbsp;</span>*@
+                </td>
+                <td>
+                    <h1 onclick=window.location.replace("/client/cancel?id=@Model[i].Id") style="background-color:transparent; color:red; font-size:16px">✘</h1>
+            </td>
+                </tr>
+        }
+    </table>
+    <br />
+    <br />
+    <br />
+</center>

@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Notebook.Data.Common;
 
 namespace Notebook.Data.Models
 {
-    public class Role : IdentityRole, INotebookElement
+    public class Role : IdentityRole
     {
         public Role()
             : this(null)
@@ -14,16 +13,7 @@ namespace Notebook.Data.Models
             : base(name)
         {
             this.Id = Guid.NewGuid().ToString();
-            this.CreatedOn = DateTime.Now;
         }
-
-        public DateTime CreatedOn { get; set; }
-
-        public DateTime? ModifiedOn { get; set; }
-
-        public bool IsDelete { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
 
     }
 }

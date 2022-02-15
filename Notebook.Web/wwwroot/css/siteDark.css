@@ -1,0 +1,42 @@
+html {
+  font-size: 14px;
+}
+a{
+    color:white;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background-image: url(/img/backgroundDark.png);
+    background-size: cover;
+    display: grid;
+    grid-template-rows: auto 2fr auto;
+    height:100%;
+}
+
+
+table {
+
+    overflow-x: auto;
+    letter-spacing: 0.5px;
+    text-align: center;
+    font-size: x-small;
+    border-block-start: groove;
+    border-block-end-style: groove;
+    border: 0.1px groove;
+    background-color: rgb(0,0,0,0.3);
+}
+
+h1{
+    color:white;
+}
+

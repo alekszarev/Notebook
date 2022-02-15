@@ -2,20 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Notebook.Data.Models;
 using Notebook.Service.Contracts;
 using Notebook.Service.Email;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Text.Encodings.Web;
 
 namespace Notebook.Web.Areas.Identity.Pages.Account
 {
@@ -78,14 +74,14 @@ namespace Notebook.Web.Areas.Identity.Pages.Account
 
                 var email = new EmailMessage()
                 {
-                 FromAddresses = sender,
-                 ToAddresses= reciever,
+                    FromAddresses = sender,
+                    ToAddresses = reciever,
                     Subject = "Reset Password",
                     Content = $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>."
 
                 };
 
-                 _emailSender.Send(email);
+                _emailSender.Send(email);
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }

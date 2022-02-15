@@ -1,0 +1,61 @@
+﻿@using Notebook.Data.Models.Calendar
+@model Day
+
+<head>
+    <link href="/css/minimal-tableDark.css" rel="stylesheet" type="text/css">
+</head>
+<div>
+    <center>
+        @{
+            var dayId = Model.DayId;
+            var url = $"https://localhost:7172/client/day?id=";
+
+
+            if (dayId == 1)
+            {
+                <h1 style="text-align:center">@Model.Date @Model.Month.MonthName<a href='@url@(dayId+1)' style="text-decoration: none"> →</a></h1>
+            }
+            else
+            {
+                <h1 style="text-align:center"> <a href='@url@(dayId-1)' style="text-decoration: none">← </a>@Model.Date @Model.Month.MonthName<a href='@url@(dayId+1)' style="text-decoration: none"> →</a></h1>
+            }
+
+            if (@Model.WorkingDay == false)
+            {
+                <h1 style="font-size:10px; color: red">Неработен ден</h1>
+            }
+            else
+            {
+                <table>
+                    <tr>
+                        <th>Свободни часове:</th>
+                    </tr>
+                    @foreach (var item in @Model.Hours.Where(x=>x.IsBusy == false))
+                    {
+                        var day = $"{item.Day.Date.ToString()} {item.Day.Month.MonthName}";
+                        var hour = $"{item.Clock}:00";
+                        <tr>
+                            @if (item.Appointment == null)
+                            {
+                                var itemNext = @Model.Hours.Where(x => x.HourId == item.HourId + 1).FirstOrDefault();
+                                if (itemNext == null)
+                                {
+                                <td type=day class=popup-trigger onclick=window.location.replace(`https://localhost:7172/client/approve?day=${@item.DayId}&hour=${@item.Clock}`) title=Заяви style="border-radius:200px; color:white;background-color:rgb(255,105,180,0.5)">@hour</td>
+                                }
+                                else if(itemNext.IsBusy == false)
+                                {
+                                <td type=day class=popup-trigger onclick=window.location.replace(`https://localhost:7172/client/approve?day=${@item.DayId}&hour=${@item.Clock}`) title=Заяви style="border-radius:200px; color:white;background-color:rgb(255,105,180,0.5)">@hour</td>
+                                }
+                               
+                            }
+                                    
+                        </tr>
+                    }
+                </table>
+            }
+        }
+    </center>
+</div>
+<br />
+<br />
+<br />

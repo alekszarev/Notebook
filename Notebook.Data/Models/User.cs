@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Notebook.Data.Common;
+using Notebook.Data.Models.Calendar;
 
 namespace Notebook.Data.Models
 {
-    public class User : IdentityUser, INotebookElement
+    public class User : IdentityUser, INotebookInformation
     {
         public User()
         {
@@ -11,15 +12,22 @@ namespace Notebook.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
-            this.CreatedOn = DateTime.Now;
+            this.Appointments = new HashSet<Appointment>();
+            this.CreatedOn = DateTime.Now.ToString("dddd, dd MMMM yyyy");
+            this.Conversations = new HashSet<Conversation>();
+
         }
 
-        public string Name { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-        public DateTime? ModifiedOn { get; set; }
+        public bool GotAppointment { get; set; } = false;
+        public string? Name { get; set; }
+        public string CreatedOn { get; set; }
+        public string? ModifiedOn { get; set; }
         public bool IsDelete { get; set; }
-        public DateTime? DeletedOn { get; set; }
+        public string? DeletedOn { get; set; }
+
+        public virtual ICollection<Conversation> Conversations { get; set; }
+
+        public virtual ICollection<Appointment> Appointments { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

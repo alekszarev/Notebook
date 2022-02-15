@@ -1,0 +1,52 @@
+﻿@*  var x = 0;
+    if (x == 1)
+    {
+
+    <h6 style="color:white; text-align:center">Заявката ви е изпратена.</h6>
+
+    }
+    else
+    {*@
+      @using Microsoft.AspNetCore.Http;
+      @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Notebook.Web.Models
+@using System.Security.Claims
+@model SendModel
+
+@{
+    <form asp-action="Send">
+        <h3 style="color:white; text-align:center">Заявка за час:</h3>
+        <center style="background-color:rgb(1,1,1,0.6)">
+
+            <label asp-for="HourId" style="color:pink; font-size:22px">@Model.Hour.Clock : 00</label>
+            <input asp-for="HourId" value="@Model.Hour.HourId" hidden />
+            <br>
+            <label asp-for="DayId" style="color:white; font-size:22px">@Model.Day.Date @Model.Day.Month.MonthName </label>
+            <input asp-for="DayId" value="@Model.Day.DayId" hidden />
+            <input asp-for="UserId" value="@User.FindFirst(ClaimTypes.NameIdentifier).Value" hidden />
+        </center>
+        <span>&nbsp;</span>
+
+
+        <center style="background-color:rgb(1,1,1,0.6)">
+
+            <label asp-for="ProcedureId" style="color:white; border-radius:22px;">
+                Процедура:
+            </label>
+            <select asp-for="ProcedureId" asp-items="@Model.Procedure" class="form-control" style="text-align:center; color:black; background-color:rgb(255,255,200,0.5)"></select>
+
+        </center>
+        <span>&nbsp;</span>
+        <center >
+
+            <button type="submit" style="border-radius:200px; height:50px;width:100px; background-color:rgb(0,0,0,0.7); color:green ;font-size:28px"><span style="font-size:11px;color:white">изпрати</span>✔</button>   
+           <button type="button" onclick=window.location.replace("calendar"); style="border-radius:200px; height:50px;width:100px;margin-left:20%; background-color:rgb(0,0,0,0.7); color:red ;font-size:28px">✘<span style="font-size:11px;color:white">откажи</span></button>
+        </center>
+
+        <span>&nbsp;</span>
+    </form>
+
+
+
+
+}
